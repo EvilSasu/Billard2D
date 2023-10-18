@@ -1,5 +1,4 @@
 import math
-import time
 import pygame.font
 import pymunk
 import pymunk.pygame_util
@@ -15,7 +14,6 @@ pg.display.set_caption("Billard")
 
 # przestrzeń dla pymunk (fizyka)
 space = pymunk.Space()
-# space.gravity = (0, 2000)
 static_body = space.static_body
 draw_options = pymunk.pygame_util.DrawOptions(screen)
 
@@ -50,10 +48,9 @@ bat_image = pg.image.load("assets/sprites/new_balls/bat.png").convert_alpha()
 ball_images = []
 for i in range(1, 17):
     ball_image = pg.image.load(f"assets/sprites/new_balls/{i}.png").convert_alpha()
-    # ball_image = pg.image.load("assets/sprites/new_balls/1.png").convert_alpha()
     ball_images.append(ball_image)
 print(len(ball_images))
-#ball_images[15] = whiteBall_image
+
 
 def draw_text(text, font, text_color, x, y):
     img = font.render(text, True, text_color)
@@ -115,7 +112,6 @@ for col in range(5):
         balls.append(new_ball)
     rows -= 1
 
-# new_ball = create_ball(15, (200, 380))
 pos = (400, SCREEN_HEIGHT / 2)
 white_ball = create_ball(rad, pos)
 balls.append(white_ball)
@@ -193,7 +189,6 @@ while playing:
         bat.update(bat_angle)
         bat.draw(screen)
 
-    #print(str(x_impulse) + " " + str(y_impulse))
     if power_up and force <= 35000:
         force += 100
         mouse_pos = pg.mouse.get_pos()
@@ -226,7 +221,6 @@ while playing:
         if event.type == pg.MOUSEBUTTONUP and can_shot:
             bat.rect.center = balls[-1].body.position
             power_up = False
-            #print(mouse_pos)
 
         if event.type == pg.QUIT:
             playing = False
@@ -234,7 +228,6 @@ while playing:
         draw_text(f"Power: {force}", small_font, BLACK, SCREEN_WIDTH / 2 - 125, 0)
     if force > 35000:
         draw_text(f"Power: {force} is MAX", small_font, BLACK, SCREEN_WIDTH / 2 - 125, 0)
-    #space.debug_draw(draw_options)
     pg.display.update()
 
 pg.quit()
